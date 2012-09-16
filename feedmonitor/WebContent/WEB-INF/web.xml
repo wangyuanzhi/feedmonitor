@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>feedmonitor</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+    <welcome-file>index.zul</welcome-file>
+  </welcome-file-list>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+            /WEB-INF/applicationContext.xml
+        </param-value>
+  </context-param>
+  <listener>
+    <listener-class>com.hotinno.feedmonitor.web.context.BuffaloContextListener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>org.zkoss.spring.web.context.CoreContextListener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <listener>
+    <description>Used to cleanup when a session is destroyed</description>
+    <display-name>ZK Session cleaner</display-name>
+    <listener-class>org.zkoss.zk.ui.http.HttpSessionListener</listener-class>
+  </listener>
+  <servlet>
+    <servlet-name>spring</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+  <servlet>
+    <description></description>
+    <display-name>ClientIp</display-name>
+    <servlet-name>ClientIp</servlet-name>
+    <servlet-class>com.hotinno.feedmonitor.web.ip.ClientIp</servlet-class>
+  </servlet>
+  <servlet>
+    <description></description>
+    <display-name>HomeIp</display-name>
+    <servlet-name>HomeIp</servlet-name>
+    <servlet-class>com.hotinno.feedmonitor.web.ip.HomeIp</servlet-class>
+  </servlet>
+  <servlet>
+    <description>
+  	The ZK loader for ZUML pages</description>
+    <servlet-name>zkLoader</servlet-name>
+    <servlet-class>org.zkoss.zk.ui.http.DHtmlLayoutServlet</servlet-class>
+    <init-param>
+      <param-name>update-uri</param-name>
+      <param-value>/zkau</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet>
+    <description>
+  	The asynchronous update engine for ZK</description>
+    <servlet-name>auEngine</servlet-name>
+    <servlet-class>org.zkoss.zk.au.http.DHtmlUpdateServlet</servlet-class>
+  </servlet>
+  <filter>
+    <filter-name>Set Character Encoding</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>utf8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>Set Character Encoding</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <servlet-mapping>
+    <servlet-name>spring</servlet-name>
+    <url-pattern>*.html</url-pattern>
+  </servlet-mapping>
+  <session-config>
+    <session-timeout>30</session-timeout>
+  </session-config>
+  <servlet-mapping>
+    <servlet-name>ClientIp</servlet-name>
+    <url-pattern>/clientip</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>HomeIp</servlet-name>
+    <url-pattern>/homeip</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>zkLoader</servlet-name>
+    <url-pattern>*.zul</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>zkLoader</servlet-name>
+    <url-pattern>*.zhtml</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>auEngine</servlet-name>
+    <url-pattern>/zkau/*</url-pattern>
+  </servlet-mapping>
+</web-app>

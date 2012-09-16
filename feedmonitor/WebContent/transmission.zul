@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Transmission Setting" contentType="text/html;charset=UTF-8"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" ?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+	<window id="transWindow" title="Transmission Setting"
+		border="normal" width="100%" apply="${transCtrl}">
+		<div id="infoDiv">
+			<a href='heartbeat.html'>HeartBeat</a>
+			,
+			<a href='feed.html'>Feed Management</a>
+			,
+			<a href='seed.html'>Seed Management</a>
+		</div>
+		<html><![CDATA[ <hr> ]]></html>
+		<grid id="transGrid" width="100%">
+			<columns height="22px">
+				<column label="Type" width="150px" align="left" />
+				<column label="Content" align="left" />
+			</columns>
+			<rows>
+				<row>
+					FQDN or IP Address
+					<textbox id="fqdn" width="370px"
+						constraint="no empty" />
+				</row>
+				<row>
+					Port
+					<intbox id="port"
+						constraint="no empty,no negative,no zero" value="9091" />
+				</row>
+				<row>
+					RPC Path
+					<textbox id="rpcPath" constraint="no empty"
+						value="/transmission/rpc" />
+				</row>
+				<row>
+					User Name
+					<textbox id="username" constraint="no empty" />
+				</row>
+				<row>
+					Password
+					<textbox id="password1" type="password"
+						constraint="no empty" />
+				</row>
+				<row>
+					Retype Password
+					<textbox id="password2" type="password"
+						constraint="no empty" />
+				</row>
+				<row>
+					Comment
+					<textbox id="comment" rows="6" width="370px;">
+					</textbox>
+				</row>
+			</rows>
+		</grid>
+		<button id="updateBtn" label="Update" /><div id="updateDiv" />
+	</window>
+</zk>
+<?script type="text/javascript" src="/analytics.js"?>
