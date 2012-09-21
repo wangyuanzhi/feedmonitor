@@ -53,6 +53,14 @@ _gaq.push(['_trackPageview']);
 				href="http://<c:out value='${latestIp}' />:9000">IP Address</a></td>
 			<td align="left"><a href="http://192.168.0.223:9000">LAN</a></td>
 		</tr>
+		<tr>
+			<td align="left">Connect to <b>Web Shell</b> with:</td>
+			<td align="left"><a href="https://kingchy.dyndns.org:4200">FQDN
+					(Domain Name)</a></td>
+			<td align="left"><a
+				href="https://<c:out value='${latestIp}' />:4200">IP Address</a></td>
+			<td align="left"><a href="https://192.168.0.223:4200">LAN</a></td>
+		</tr>
 	</table>
 	<hr>
 	<table border="1">
@@ -63,6 +71,7 @@ _gaq.push(['_trackPageview']);
 			<th align="center">Transmission(BT)</th>
 			<th align="center">mlnet(eMule)</th>
 			<th align="center">Web Access</th>
+			<th align="center">Web Shell</th>
 		</tr>
 		<c:forEach var="hb" items="${heatbeats}">
 			<tr>
@@ -84,6 +93,10 @@ _gaq.push(['_trackPageview']);
 				<td align="left"><a
 					href="http://<c:out value='${hb.ip}' />:9000">http://<c:out
 							value='${hb.ip}' />:9000</a>
+				</td>
+				<td align="left"><a
+					href="https://<c:out value='${hb.ip}' />:4200">https://<c:out
+							value='${hb.ip}' />:4200</a>
 				</td>
 			</tr>
 		</c:forEach>
