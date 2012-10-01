@@ -25,6 +25,10 @@
 						constraint="no empty" />
 				</row>
 				<row>
+					Secure Connection (SSL)
+					<checkbox id="ssl" value="true" />
+				</row>
+				<row>
 					Port
 					<intbox id="port"
 						constraint="no empty,no negative,no zero" value="9091" />

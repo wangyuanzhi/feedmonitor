@@ -31,11 +31,11 @@ _gaq.push(['_trackPageview']);
 	<table border="1">
 		<tr>
 			<td align="left">Connect to <b>Transmission(BT)</b> with:</td>
-			<td align="left"><a href="http://kingchy.dyndns.org:9091">FQDN
+			<td align="left"><a href="https://kingchy.dyndns.org/transmission/">FQDN
 					(Domain Name)</a></td>
 			<td align="left"><a
-				href="http://<c:out value='${latestIp}' />:9091">IP Address</a></td>
-			<td align="left"><a href="http://192.168.0.223:9091">LAN</a></td>
+				href="https://<c:out value='${latestIp}' />/transmission/">IP Address</a></td>
+			<td align="left"><a href="https://192.168.0.223/transmission/">LAN</a></td>
 		</tr>
 		<tr>
 			<td align="left">Connect to <b>mlnet(eMule)</b> with:</td>
@@ -55,11 +55,11 @@ _gaq.push(['_trackPageview']);
 		</tr>
 		<tr>
 			<td align="left">Connect to <b>Web Shell</b> with:</td>
-			<td align="left"><a href="https://kingchy.dyndns.org:4200">FQDN
+			<td align="left"><a href="https://kingchy.dyndns.org/webshell/">FQDN
 					(Domain Name)</a></td>
 			<td align="left"><a
-				href="https://<c:out value='${latestIp}' />:4200">IP Address</a></td>
-			<td align="left"><a href="https://192.168.0.223:4200">LAN</a></td>
+				href="https://<c:out value='${latestIp}' />/webshell/">IP Address</a></td>
+			<td align="left"><a href="https://192.168.0.223/webshell/">LAN</a></td>
 		</tr>
 	</table>
 	<hr>
@@ -68,10 +68,6 @@ _gaq.push(['_trackPageview']);
 			<th align="center">IP Address</th>
 			<th align="center">First Strike</th>
 			<th align="center">Last Beat</th>
-			<th align="center">Transmission(BT)</th>
-			<th align="center">mlnet(eMule)</th>
-			<th align="center">Web Access</th>
-			<th align="center">Web Shell</th>
 		</tr>
 		<c:forEach var="hb" items="${heatbeats}">
 			<tr>
@@ -81,22 +77,6 @@ _gaq.push(['_trackPageview']);
 				</td>
 				<td align="left"><fmt:formatDate value="${hb.lastBeat}"
 						pattern="yyyy.MM.dd 'at' HH:mm:ss" timeZone="GMT+8" />
-				</td>
-				<td align="left"><a
-					href="http://<c:out value='${hb.ip}' />:9091">http://<c:out
-							value='${hb.ip}' />:9091</a>
-				</td>
-				<td align="left"><a
-					href="http://<c:out value='${hb.ip}' />:4080">http://<c:out
-							value='${hb.ip}' />:4080</a>
-				</td>
-				<td align="left"><a
-					href="http://<c:out value='${hb.ip}' />:9000">http://<c:out
-							value='${hb.ip}' />:9000</a>
-				</td>
-				<td align="left"><a
-					href="https://<c:out value='${hb.ip}' />:4200">https://<c:out
-							value='${hb.ip}' />:4200</a>
 				</td>
 			</tr>
 		</c:forEach>

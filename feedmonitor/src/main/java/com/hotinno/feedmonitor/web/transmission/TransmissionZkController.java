@@ -12,6 +12,7 @@ import org.zkoss.spring.util.GenericSpringComposer;
 import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Label;
@@ -26,6 +27,9 @@ import com.hotinno.feedmonitor.dao.config.Transmission;
 public class TransmissionZkController extends GenericSpringComposer {
 	@Autowired
 	private Textbox fqdn;
+
+	@Autowired
+	private Checkbox ssl;
 
 	@Autowired
 	private Intbox port;
@@ -67,6 +71,10 @@ public class TransmissionZkController extends GenericSpringComposer {
 		for (Config item : items) {
 			if (item.getName().equals(Transmission.PARAM_NAME_FQDN)) {
 				fqdn.setValue(item.getValue());
+				continue;
+			}
+			if (item.getName().equals(Transmission.PARAM_IS_SSL_ENABLED)) {
+				ssl.setChecked(Boolean.parseBoolean(item.getValue()));
 				continue;
 			}
 			if (item.getName().equals(Transmission.PARAM_NAME_PORT)) {
@@ -122,6 +130,12 @@ public class TransmissionZkController extends GenericSpringComposer {
 				Transmission.PARAM_NAME_FQDN);
 		fqdnConfig.setValue(fqdn.getValue());
 		configList.add(fqdnConfig);
+
+		Config sslConfig = getConfigItem(
+				Transmission.PARAM_SECTION_TRANSMISSION,
+				Transmission.PARAM_IS_SSL_ENABLED);
+		sslConfig.setValue(Boolean.toString(ssl.isChecked()));
+		configList.add(sslConfig);
 
 		Config portConfig = getConfigItem(
 				Transmission.PARAM_SECTION_TRANSMISSION,

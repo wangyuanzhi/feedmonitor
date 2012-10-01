@@ -5,8 +5,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.sql.Timestamp;
 import java.util.List;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,6 +23,10 @@ import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
@@ -117,6 +129,7 @@ public class BtSeedsMonitor {
 	private String username;
 	private String password;
 	private String fqdn;
+	private boolean isSslEnabled;
 	private int port;
 	private String rpcPath;
 
@@ -126,6 +139,10 @@ public class BtSeedsMonitor {
 		for (Config item : items) {
 			if (item.getName().equals(Transmission.PARAM_NAME_FQDN)) {
 				fqdn = item.getValue();
+				continue;
+			}
+			if (item.getName().equals(Transmission.PARAM_IS_SSL_ENABLED)) {
+				isSslEnabled = Boolean.parseBoolean(item.getValue());
 				continue;
 			}
 			if (item.getName().equals(Transmission.PARAM_NAME_PORT)) {
@@ -292,7 +309,12 @@ public class BtSeedsMonitor {
 		HttpConnectionParams
 				.setConnectionTimeout(httpparams, connectionTimeout);
 		HttpConnectionParams.setSoTimeout(httpparams, connectionTimeout);
+
 		DefaultHttpClient httpclient = new DefaultHttpClient(httpparams);
+
+		if (isSslEnabled) {
+			httpclient = wrapHttpClient(httpclient);
+		}
 
 		// Authentication credentials
 		httpclient.getCredentialsProvider().setCredentials(
@@ -302,8 +324,46 @@ public class BtSeedsMonitor {
 		return httpclient;
 	}
 
+	public DefaultHttpClient wrapHttpClient(DefaultHttpClient httpclient) {
+		SSLContext ctx;
+		try {
+			ctx = SSLContext.getInstance("TLS");
+		} catch (NoSuchAlgorithmException e) {
+			throw new RuntimeException(e);
+		}
+		X509TrustManager tm = new X509TrustManager() {
+
+			public void checkClientTrusted(X509Certificate[] xcs,
+					String string) throws CertificateException {
+			}
+
+			public void checkServerTrusted(X509Certificate[] xcs,
+					String string) throws CertificateException {
+			}
+
+			public X509Certificate[] getAcceptedIssuers() {
+				return null;
+			}
+
+		};
+
+		try {
+			ctx.init(null, new TrustManager[] { tm }, null);
+		} catch (KeyManagementException e) {
+			throw new RuntimeException(e);
+		}
+		SSLSocketFactory ssf = new SSLSocketFactory(ctx,
+				SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+		ClientConnectionManager ccm = httpclient.getConnectionManager();
+		SchemeRegistry sr = ccm.getSchemeRegistry();
+		sr.register(new Scheme("https", 443, ssf));
+
+		return new DefaultHttpClient(ccm, httpclient.getParams());
+	}
+
 	private String buildRpcUrl() {
-		return String.format("http://%s:%s%s", fqdn, port, rpcPath);
+		String protocol = isSslEnabled ? "https" : "http";
+		return String.format("%s://%s:%s%s", protocol, fqdn, port, rpcPath);
 	}
 
 	private static String ConvertStreamToString(InputStream is, String encoding)
