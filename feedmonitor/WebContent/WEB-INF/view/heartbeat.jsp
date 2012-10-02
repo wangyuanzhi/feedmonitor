@@ -79,9 +79,9 @@ _gaq.push(['_trackPageview']);
 				<td align="left"><fmt:formatDate value="${hb.lastBeat}"
 						pattern="yyyy.MM.dd 'at' HH:mm:ss" timeZone="GMT+8" />
 				</td>
-				<td align="left"><fmt:formatNumber maxFractionDigits="2"
+				<td align="right"><fmt:formatNumber maxFractionDigits="2"
 						value="${ (hb.lastBeat.time - hb.time.time) / (60* 60 * 1000) % 60 }" />
-					Hour(s)</td>
+					hour(s)</td>
 			</tr>
 		</c:forEach>
 	</table>
