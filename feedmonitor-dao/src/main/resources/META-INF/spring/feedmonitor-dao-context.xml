@@ -15,10 +15,10 @@
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://127.0.0.1:3306/buffalo?useUnicode=true&amp;characterEncoding=utf-8" />
-		<property name="username" value="root" />
-		<property name="password" value="password" />
+		<property name="driverClassName" value="org.postgresql.Driver" />
+		<property name="url" value="jdbc:postgresql://127.0.0.1/feedmonitor" />
+		<property name="username" value="feedmonitor" />
+		<property name="password" value="" />
 	</bean>
 	<bean id="feedmonitorEmf"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">

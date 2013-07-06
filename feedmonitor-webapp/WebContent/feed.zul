@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Buffalo's Feeds Management" contentType="text/html;charset=UTF-8"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" ?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+	<window title="Buffalo's Feed Management" border="normal"
+		width="100%">
+		<div id="infoDiv"><a href='heartbeat.html'>HeartBeat</a>, <a href='seed.html'>Seed Management</a></div>
+		<html><![CDATA[ <hr> ]]></html>
+		<grid id="feedGrid" width="100%" apply="${feedGrid}"
+			rowRenderer="com.hotinno.feedmonitor.web.feed.FeedRowRenderer">
+			<columns height="22px">
+				<column label="RSS URL" align="center" sort="auto(url)" />
+				<column label="Keywords" align="center"
+					sort="auto(keywords)" />
+				<column width="130px" label="Last Update" align="center"
+					sort="auto(lastUpdated)" />
+				<column label="Comments" align="center" />
+				<column label="Actions" align="center" />
+			</columns>
+		</grid>
+		<button label="Add Feed" apply="${addFeedButton}" />
+	</window>
+</zk>
+<?script type="text/javascript" src="/analytics.js"?>
