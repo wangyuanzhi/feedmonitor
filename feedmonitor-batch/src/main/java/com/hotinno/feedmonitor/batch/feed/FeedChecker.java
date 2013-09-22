@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Timestamp;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -50,7 +51,7 @@ public class FeedChecker implements ItemWriter<String> {
 
 				@SuppressWarnings("unchecked")
 				List<SyndEntry> entries = syndFeed.getEntries();
-				List<BtSeed> seeds = new ArrayList<BtSeed>(entries.size());
+				Set<BtSeed> seeds = new HashSet<BtSeed>(entries.size());
 
 				for (Feed feed : feedDao.getAllByUrl(url)) {
 

@@ -1,5 +1,6 @@
 package com.hotinno.feedmonitor.dao.btseed;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -23,7 +24,7 @@ public class BtSeedDao {
 	}
 
 	@Transactional
-	public void persist(List<BtSeed> seeds) {
+	public void persist(Collection<BtSeed> seeds) {
 		for (BtSeed btSeed : seeds) {
 			persist(btSeed);
 		}

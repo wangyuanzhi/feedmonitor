@@ -32,7 +32,7 @@ public class HeartBeatController {
 
 	@Autowired
 	private FeedDao feedDao;
-
+	
 	@Autowired
 	private BtSeedsMonitor btSeedsMonitor;
 
@@ -42,16 +42,6 @@ public class HeartBeatController {
 			// Handle a new guest (if any):
 			String token = request.getParameter("token");
 			if ("3405638492761444561L".equals(token)) {
-				String ip = WebUtil.getClientIpAddr(request);
-				List<HeartBeat> heartBeats = heartBeatDao.getLastHeartBearts(1);
-				if (heartBeats.size() > 0
-						&& StringUtils.equals(ip, heartBeats.get(0).getIp())) {
-					heartBeats.get(0).setLastBeat(null);
-					heartBeatDao.merge(heartBeats.get(0));
-				} else {
-					heartBeatDao.persist(new HeartBeat(ip));
-				}
-
 				// Notify seeds monitor that transmission is alive.
 				new Thread(new Runnable() {
 					@Override
@@ -68,6 +58,17 @@ public class HeartBeatController {
 						checkFeedMonitor(request);
 					}
 				}).start();
+
+				// Update latest heartbeat.
+				String ip = WebUtil.getClientIpAddr(request);
+				List<HeartBeat> heartBeats = heartBeatDao.getLastHeartBearts(1);
+				if (heartBeats.size() > 0
+						&& StringUtils.equals(ip, heartBeats.get(0).getIp())) {
+					heartBeats.get(0).setLastBeat(null);
+					heartBeatDao.merge(heartBeats.get(0));
+				} else {
+					heartBeatDao.persist(new HeartBeat(ip));
+				}
 			}
 		}
 

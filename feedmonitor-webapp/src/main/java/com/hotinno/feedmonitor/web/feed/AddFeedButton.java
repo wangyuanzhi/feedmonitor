@@ -35,7 +35,7 @@ public class AddFeedButton extends Button implements Composer {
 						Feed feed = new Feed();
 						feed.setName("auto add");
 						feed.setUrl("http://oabt.org/rss.php?cid=1");
-						feed.setKeywords("720 rmvb ¹Ø¼ü×Ö");
+						feed.setKeywords("720 mp4 æ˜Ÿçƒå¤§æˆ˜");
 						FeedDao feedDao = SpringUtil.getApplicationContext()
 								.getBean(FeedDao.class);
 						feedDao.persist(feed);

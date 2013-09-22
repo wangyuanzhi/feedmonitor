@@ -1,5 +1,6 @@
 package com.hotinno.feedmonitor.web.seed;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hotinno.feedmonitor.dao.btseed.BtSeed;
@@ -24,9 +27,30 @@ public class SeedController {
 	private BtSeedDao btSeedDao;
 
 	@RequestMapping(value = "/seed")
-	public ModelAndView guestbook(HttpServletRequest request) {
+	public ModelAndView seed(HttpServletRequest request) {
 		return new ModelAndView("forward:./seed.zul");
 		// return handleWithSpringMvc(request);
+	}
+
+	@RequestMapping(value = "/seeds")
+	public @ResponseBody List<BtSeed> seeds() {
+		// Send unprocessed seeds back
+		return btSeedDao.getAllUnProcessed();
+	}
+
+	@RequestMapping(value = "/seeds/{seedId}")
+	public @ResponseBody BtSeed updateSeed(@PathVariable long seedId, HttpServletRequest request) {
+		BtSeed seed = btSeedDao.getById(seedId);
+
+		if (request.getMethod().equals("POST")) {
+			seed.setProcessed(true);
+			seed.setComment("By Buffalo");
+			seed.setProcessedTime(new Timestamp(System.currentTimeMillis()));
+
+			btSeedDao.merge(seed);
+		}
+
+		return seed;
 	}
 
 	public ModelAndView handleWithSpringMvc(HttpServletRequest request) {

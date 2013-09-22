@@ -31,7 +31,10 @@
         <spring.batch.version>2.1.7.RELEASE</spring.batch.version>
 
         <hibernate.version>3.6.0.Final</hibernate.version>
-        <jackson.mapper.version>1.9.6</jackson.mapper.version>
+
+        <jackson-2-version>2.2.2</jackson-2-version>
+        <jackson.mapper.version>1.4.3</jackson.mapper.version>
+
         <httpclient.version>4.1.2</httpclient.version>
 
         <!-- Other properties -->
@@ -329,7 +332,7 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>0.11.8</version>
+                <version>0.12.0</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
@@ -381,6 +384,60 @@
                 <artifactId>postgresql</artifactId>
                 <version>9.1-901.jdbc4</version>
                 <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>com.springsource.org.codehaus.jackson</artifactId>
+                <version>${jackson.mapper.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>com.springsource.org.codehaus.jackson.mapper</artifactId>
+                <version>${jackson.mapper.version}</version>
+            </dependency>
+
+            <!-- the core, which includes Streaming API, shared low-level 
+                abstractions (but NOT data-binding) -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson-2-version}</version>
+            </dependency>
+
+            <!-- Just the annotations; use this dependency if you want to 
+                attach annotations to classes without connecting them to the code. -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson-2-version}</version>
+            </dependency>
+
+            <!-- databinding; ObjectMapper, JsonNode and related classes 
+                are here -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson-2-version}</version>
+            </dependency>
+
+            <!-- smile (binary JSON). Other artifacts in this group do other 
+                formats. -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-smile</artifactId>
+                <version>${jackson-2-version}</version>
+            </dependency>
+            <!-- JAX-RS provider -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.jaxrs</groupId>
+                <artifactId>jackson-jaxrs-json-provider</artifactId>
+                <version>${jackson-2-version}</version>
+            </dependency>
+            <!-- Support for JAX-B annotations as additional configuration -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.module</groupId>
+                <artifactId>jackson-module-jaxb-annotations</artifactId>
+                <version>${jackson-2-version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

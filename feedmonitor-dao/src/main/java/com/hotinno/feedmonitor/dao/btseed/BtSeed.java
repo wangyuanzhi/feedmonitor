@@ -11,6 +11,7 @@ import javax.persistence.Table;
 
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
@@ -18,6 +19,7 @@ import lombok.Setter;
 @Table(name = "BT_SEED")
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(of={"magnetUrl"})
 public class BtSeed implements Serializable {
 	private static final long serialVersionUID = -3405638492761444561L;
 

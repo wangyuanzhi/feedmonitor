@@ -78,7 +78,7 @@
   </filter-mapping>
   <servlet-mapping>
     <servlet-name>spring</servlet-name>
-    <url-pattern>*.html</url-pattern>
+    <url-pattern>/</url-pattern>
   </servlet-mapping>
   <session-config>
     <session-timeout>30</session-timeout>
@@ -94,10 +94,6 @@
   <servlet-mapping>
     <servlet-name>zkLoader</servlet-name>
     <url-pattern>*.zul</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>zkLoader</servlet-name>
-    <url-pattern>*.zhtml</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>auEngine</servlet-name>
