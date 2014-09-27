@@ -133,7 +133,7 @@ public class BtSeedsMonitor {
 	private int port;
 	private String rpcPath;
 
-	private void initTransimissionConfig() {
+	private void initTransmissionConfig() {
 		List<Config> items = configDao
 				.getConfigBySection(Transmission.PARAM_SECTION_TRANSMISSION);
 		for (Config item : items) {
@@ -170,7 +170,7 @@ public class BtSeedsMonitor {
 	 * Will be called by HeartBeatController
 	 */
 	public void checkSeeds() {
-		initTransimissionConfig();
+		initTransmissionConfig();
 
 		List<BtSeed> seeds = btSeedDao.getAllUnProcessed();
 		if (log.isDebugEnabled()) {
@@ -195,7 +195,7 @@ public class BtSeedsMonitor {
 	 * Will be called by HeartBeatController
 	 */
 	public BtSeed checkSeed(long seedId) {
-		initTransimissionConfig();
+		initTransmissionConfig();
 
 		BtSeed seed = btSeedDao.getById(seedId);
 

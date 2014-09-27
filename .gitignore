@@ -1,7 +1,9 @@
 /.classpath
+/.idea
 /.project
 /.settings
 /.springBeans
 /target
 /logs
 *.log
+*.iml
