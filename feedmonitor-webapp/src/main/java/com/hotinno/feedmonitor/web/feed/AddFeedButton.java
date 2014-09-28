@@ -1,7 +1,8 @@
 package com.hotinno.feedmonitor.web.feed;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.zkoss.spring.SpringUtil;
 import org.zkoss.zk.ui.api.HtmlBasedComponent;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -19,6 +20,18 @@ public class AddFeedButton extends Button implements Composer {
 
 	private static final long serialVersionUID = 5218765905980010510L;
 
+	@Autowired
+	private FeedDao feedDao;
+
+	@Value("${feed.default.name}")
+	private String name;
+
+	@Value("${feed.default.url}")
+	private String url;
+
+	@Value("${feed.default.keywords}")
+	private String keywords;
+
 	@Override
 	public void doAfterCompose(final org.zkoss.zk.ui.Component comp)
 			throws Exception {
@@ -33,11 +46,10 @@ public class AddFeedButton extends Button implements Composer {
 								.getListModel();
 
 						Feed feed = new Feed();
-						feed.setName("auto add");
-						feed.setUrl("http://oabt.org/rss.php?cid=1");
-						feed.setKeywords("720 mp4 星球大战");
-						FeedDao feedDao = SpringUtil.getApplicationContext()
-								.getBean(FeedDao.class);
+						feed.setName(name);
+						feed.setUrl(url);
+						feed.setKeywords(keywords);
+
 						feedDao.persist(feed);
 						model.add(feed);
 						break;
